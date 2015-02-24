@@ -1,9 +1,9 @@
 /dts-v1/;
-#include "bcm2835-rpi.dtsi"
+#include "bcm2836-rpi.dtsi"
 
 / {
-	compatible = "raspberrypi,model-b-plus", "brcm,bcm2835";
-	model = "Raspberry Pi Model B+";
+	compatible = "raspberrypi,2-model-b", "brcm,bcm2836";
+	model = "Raspberry Pi 2 Model B";
 
 	leds {
 		act {
