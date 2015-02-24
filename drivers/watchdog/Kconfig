@@ -1216,11 +1216,11 @@ config BCM63XX_WDT
 
 config BCM2835_WDT
 	tristate "Broadcom BCM2835 hardware watchdog"
-	depends on ARCH_BCM2835
+	depends on ARCH_BCM283X
 	select WATCHDOG_CORE
 	help
 	  Watchdog driver for the built in watchdog hardware in Broadcom
-	  BCM2835 SoC.
+	  BCM283x SoC.
 
 	  To compile this driver as a loadable module, choose M here.
 	  The module will be called bcm2835_wdt.

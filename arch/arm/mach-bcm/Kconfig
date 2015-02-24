@@ -107,8 +107,15 @@ config ARCH_BCM_MOBILE_SMP
 
 comment "Other Architectures"
 
+config ARCH_BCM283X
+	bool
+	help
+	  This option should be selected by the 2835 and 2836 chips to
+	  enable common platform features.
+
 config ARCH_BCM2835
 	bool "Broadcom BCM2835 family" if ARCH_MULTI_V6
+	select ARCH_BCM283X
 	select ARCH_REQUIRE_GPIOLIB
 	select ARM_AMBA
 	select ARM_ERRATA_411920

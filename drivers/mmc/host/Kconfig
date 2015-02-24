@@ -286,12 +286,12 @@ config MMC_SDHCI_BCM_KONA
 	  If you have a controller with this interface, say Y or M here.
 
 config MMC_SDHCI_BCM2835
-	tristate "SDHCI platform support for the BCM2835 SD/MMC Controller"
-	depends on ARCH_BCM2835
+	tristate "SDHCI platform support for the BCM283x SD/MMC Controller"
+	depends on ARCH_BCM283X
 	depends on MMC_SDHCI_PLTFM
 	select MMC_SDHCI_IO_ACCESSORS
 	help
-	  This selects the BCM2835 SD/MMC controller. If you have a BCM2835
+	  This selects the BCM283x SD/MMC controller. If you have a BCM283x
 	  platform with SD or MMC devices, say Y or M here.
 
 	  If unsure, say N.

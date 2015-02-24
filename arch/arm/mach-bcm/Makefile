@@ -31,8 +31,8 @@ ifeq ($(call as-instr,.arch_extension sec,as_has_sec),as_has_sec)
 CFLAGS_bcm_kona_smc.o		+= -Wa,-march=armv7-a+sec -DREQUIRES_SEC
 endif
 
-# BCM2835
-obj-$(CONFIG_ARCH_BCM2835)	+= board_bcm2835.o
+# BCM283x
+obj-$(CONFIG_ARCH_BCM283X)	+= board_bcm2835.o
 
 # BCM5301X
 obj-$(CONFIG_ARCH_BCM_5301X)	+= bcm_5301x.o
