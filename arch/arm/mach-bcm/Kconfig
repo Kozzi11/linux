@@ -115,6 +115,8 @@ config ARCH_BCM283X
 	select PINCTRL_BCM2835
 	select CLKSRC_OF
 	select CLKSRC_MMIO
+	select PM_GENERIC_DOMAINS if PM
+	select PM_GENERIC_DOMAINS_OF if PM
 	help
 	  This option should be selected by the 2835 and 2836 chips to
 	  enable common platform features.

@@ -33,6 +33,7 @@ endif
 
 # BCM283x
 obj-$(CONFIG_ARCH_BCM283X)	+= board_bcm2835.o
+obj-$(CONFIG_BCM2835_MBOX)	+= bcm2835-mailbox-power.o
 
 # BCM5301X
 obj-$(CONFIG_ARCH_BCM_5301X)	+= bcm_5301x.o
