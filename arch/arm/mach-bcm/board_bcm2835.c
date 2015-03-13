@@ -32,6 +32,7 @@
 #define PM_RSTS_HADWRH_SET		0x00000040
 
 #define BCM2835_PERIPH_PHYS	0x20000000
+#define BCM2836_PERIPH_PHYS	0x3f000000
 #define BCM2835_PERIPH_VIRT	0xf0000000
 #define BCM2835_PERIPH_SIZE	SZ_16M
 
@@ -93,16 +94,28 @@ static void bcm2835_power_off(void)
 	bcm2835_restart(REBOOT_HARD, "");
 }
 
-static struct map_desc io_map __initdata = {
+static struct map_desc bcm2835_io_map __initdata = {
 	.virtual = BCM2835_PERIPH_VIRT,
 	.pfn = __phys_to_pfn(BCM2835_PERIPH_PHYS),
 	.length = BCM2835_PERIPH_SIZE,
 	.type = MT_DEVICE
 };
 
+static struct map_desc bcm2836_io_map __initdata = {
+	.virtual = BCM2835_PERIPH_VIRT,
+	.pfn = __phys_to_pfn(BCM2836_PERIPH_PHYS),
+	.length = BCM2835_PERIPH_SIZE,
+	.type = MT_DEVICE
+};
+
 static void __init bcm2835_map_io(void)
 {
-	iotable_init(&io_map, 1);
+	iotable_init(&bcm2835_io_map, 1);
+}
+
+static void __init bcm2836_map_io(void)
+{
+	iotable_init(&bcm2836_io_map, 1);
 }
 
 static void __init bcm2835_init(void)
@@ -128,10 +141,23 @@ static const char * const bcm2835_compat[] = {
 	NULL
 };
 
+static const char * const bcm2836_compat[] = {
+	"brcm,bcm2836",
+	NULL
+};
+
 DT_MACHINE_START(BCM2835, "BCM2835")
 	.map_io = bcm2835_map_io,
 	.init_irq = irqchip_init,
 	.init_machine = bcm2835_init,
 	.restart = bcm2835_restart,
 	.dt_compat = bcm2835_compat
+MACHINE_END
+
+DT_MACHINE_START(BCM2836, "BCM2836")
+	.map_io = bcm2836_map_io,
+	.init_irq = irqchip_init,
+	.init_machine = bcm2835_init,
+	.restart = bcm2835_restart,
+	.dt_compat = bcm2836_compat
 MACHINE_END
