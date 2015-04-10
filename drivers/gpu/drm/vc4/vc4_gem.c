@@ -208,7 +208,8 @@ vc4_submit_next_job(struct drm_device *dev)
 	V3D_WRITE(V3D_BPOA, 0);
 	V3D_WRITE(V3D_BPOS, 0);
 
-	submit_cl(dev, 0, exec->ct0ca, exec->ct0ea);
+	if (exec->ct0ca != exec->ct0ea)
+		submit_cl(dev, 0, exec->ct0ca, exec->ct0ea);
 	submit_cl(dev, 1, exec->ct1ca, exec->ct1ea);
 }
 
@@ -432,6 +433,7 @@ vc4_cl_validate(struct drm_device *dev, struct vc4_exec_info *exec)
 			      bin,
 			      args->bin_cl_size,
 			      true,
+			      args->bin_cl_size != 0,
 			      exec);
 	if (ret)
 		goto fail;
@@ -441,6 +443,7 @@ vc4_cl_validate(struct drm_device *dev, struct vc4_exec_info *exec)
 			      render,
 			      args->render_cl_size,
 			      false,
+			      args->bin_cl_size != 0,
 			      exec);
 	if (ret)
 		goto fail;
