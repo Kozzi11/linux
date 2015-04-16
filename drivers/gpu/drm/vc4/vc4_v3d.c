@@ -20,6 +20,7 @@
 #include "soc/bcm2835/mailbox-property.h"
 #include "vc4_drv.h"
 #include "vc4_regs.h"
+#include "mach/vcio.h"
 
 #ifdef CONFIG_DEBUG_FS
 #define REGDEF(reg) { reg, #reg }
@@ -151,16 +152,34 @@ int
 vc4_v3d_set_power(bool on)
 {
 	struct {
-		struct bcm_mbox_property_tag_header header;
-		u32 on;
-	} packet;
+		u32 size;
+		u32 response;
+		u32 tag_id;
+		u32 send_buffer_size;
+		u32 send_data_size;
+		u32 enable;
+		u32 end_tag;
+	} msg;
+	int ret;
 
-	memset(&packet, 0, sizeof(packet));
-	packet.header.tag = bcm_mbox_set_enable_qpu;
-	packet.header.buf_size = 4;
-	packet.on = on;
+	msg.size = sizeof(msg);
+	msg.response = 0;
+	msg.end_tag = 0;
 
-	return bcm_mbox_property(&packet, sizeof(packet));
+	msg.tag_id = 0x30012;
+	msg.send_buffer_size = 4;
+	msg.send_data_size = 4;
+	msg.enable = on;
+
+	ret = bcm_mailbox_property(&msg, sizeof(msg));
+
+	if (ret == 0 && msg.response == 0x80000000) {
+		DRM_DEBUG("QPU %s\n", on ? "enabled" : "disabled");
+		return 0;
+	} else {
+		DRM_ERROR("Failed to %s QPU\n", on ? "enable" : "disable");
+		return 1;
+	}
 }
 
 static void vc4_v3d_init_hw(struct drm_device *dev)
