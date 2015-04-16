@@ -84,6 +84,15 @@
 			status = "disabled";
 		};
 
+		i2c2: i2c@7e805000 {
+			compatible = "brcm,bcm2708-i2c";
+			reg = <0x7e805000 0x1000>;
+			interrupts = <2 21>;
+			clocks = <&clk_i2c>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+		};
+
 		leds: leds {
 			compatible = "gpio-leds";
 		};
