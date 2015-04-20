@@ -119,7 +119,7 @@ vc4_hdmi_connector_detect(struct drm_connector *connector, bool force)
 		if (gpio_get_value(vc4->hdmi->hpd_gpio))
 			return connector_status_connected;
 		else
-			return connector_status_disconnected;
+			return connector_status_connected; /* XXX */
 	}
 
 	if (HDMI_READ(VC4_HDMI_HOTPLUG) & VC4_HDMI_HOTPLUG_CONNECTED)
